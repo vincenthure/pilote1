@@ -13,7 +13,7 @@ app.get('/magnetometre',   function (req, res) { res.sendFile( "magneto.html",  
 
 var server = app.listen(8081, function () 
 	{  
-    console.log("http://localhost:%s", server.address().port)
+    console.log("connetez vous à http://localhost:%s", server.address().port)
 	})
 
 const SERVICE_UUID     = 'ff10'
