@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>Parametres</title>
+    <meta charset="UTF-8">
+	<link type="text/css" rel="stylesheet" href="../css/materialize.min.css"  media="screen,projection"/>
+	</head>
+
+  <body class="lime lighten-1">
+
+    <nav>
+      <div class="nav-wrapper">
+        <a href="/" class="brand-logo">Asservissement</a>
+        <a href="/" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+      </div>
+    </nav>
+
+    <ul class="sidenav" id="mobile-demo">
+      <li><a href="/">Auto Pilote</a></li>
+      <li><a href="accelerometre">Accéléromètre</a></li>
+      <li><a href="magnetometre">Magnétomètre</a></li>
+      <li><a href="gyroscope">Gyroscope</a></li>
+      <li><a href="asservisement">Asservisssement</a></li>
+    </ul>
+
+    <div class="container blue-text text-darken-2 center-align">
+
+			<h6>
+        <button  class="waves-effect waves-light btn" id="kp-"">-</button>
+         Kp : <span id="kp"></span>
+        <button class="waves-effect waves-light btn" id="kp+">+</button>
+      </h6>
+
+      <h6>
+        <button  class="waves-effect waves-light btn" id="ki-"">-</button>
+         Ki : <span id="ki"></span>
+        <button  class="waves-effect waves-light btn" id="ki+"">+</button>
+      </h6>
+			
+      <h6>
+        <button  class="waves-effect waves-light btn" id="kd-"">-</button>
+         Kd : <span id="kd"></span>
+        <button  class="waves-effect waves-light btn" id="kd+"">+</button>
+      </h6>
+      
+      <hr>
+      <p id="rectangle1"></p>
+      <hr>
+      
+      <button  id="save" class="waves-effect waves-light btn red lighten-2">Sauve</button>
+ 			
+	</div>
+    <script src="js/pid.js"></script>
+    <script type="text/javascript" src="js/materialize.min.js"></script>
+    <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+  </body>
+
+</html>
+

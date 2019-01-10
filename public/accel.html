@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>Parametres</title>
+    <meta charset="UTF-8">
+	<link type="text/css" rel="stylesheet" href="../css/materialize.min.css"  media="screen,projection"/>
+	</head>
+
+  <body class="lime lighten-1">
+    
+   <nav>
+      <div class="nav-wrapper">
+        <a href="/" class="brand-logo">Accéléromètre</a>
+        <a href="/" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+      </div>
+    </nav>
+
+    <ul class="sidenav" id="mobile-demo">
+      <li><a href="/">Auto Pilote</a></li>
+      <li><a href="accelerometre">Accéléromètre</a></li>
+      <li><a href="magnetometre">Magnétomètre</a></li>
+      <li><a href="gyroscope">Gyroscope</a></li>
+      <li><a href="asservisement">Asservisssement</a></li>
+    </ul>
+    
+    <div class="container blue-text text-darken-2 center-align">
+
+      <h6>
+        X : <span id="x"></span> g
+      </h6>
+      <h6>
+        Y : <span id="y"></span> g
+      </h6>
+      <h6>
+        Z : <span id="z"></span> g
+      </h6>
+ 			
+	</div>
+    <script src="js/accel.js"></script>
+    <script type="text/javascript" src="js/materialize.min.js"></script>
+    <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+  </body>
+
+</html>
+
