@@ -2,3 +2,6 @@ git clone https://github.com/vincenthure/pilote1.git
 cd pilote1
 npm update
 sudo node app.js
+
+git commit
+git push
