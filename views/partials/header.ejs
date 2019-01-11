@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title><%= titre %></title>
+		<meta charset="UTF-8">
+		<link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+	</head>
+	
+	<body class="lime lighten-1">
+		<nav>
+			<div class="nav-wrapper">
+				<a href="/" class="brand-logo">   <%= titre %> </a>
+				<a href="/" data-target="mobile-demo" class="sidenav-trigger"><img src="images/menu.png" height="36" ></a>
+			</div>
+		</nav>
+
+		<ul class="sidenav" id="mobile-demo">
+			<li><a href="/">Auto Pilote</a></li>
+			<li><a href="accelerometre">	Accéléromètre	</a></li>
+			<li><a href="magnetometre">		Magnétomètre	</a></li>
+			<li><a href="gyroscope">		Gyroscope		</a></li>
+			<li><a href="asservissement">	Asservisssement	</a></li>
+		</ul>
+		
+		<div class="container blue-text text-darken-2 center-align">

@@ -18,20 +18,3 @@ function get_cap()
     $.get(  "http://localhost:8081/cap", 
             function(data) { document.getElementById("cap").innerHTML = Math.round(data).toString() });
     }
-
-document.addEventListener('DOMContentLoaded', function() {
-    var elems = document.querySelectorAll('.sidenav');
-    var instances = M.Sidenav.init(elems, );
-  });
-    
-setInterval(function()
-    {
-    $.get(  "http://localhost:8081/connected", function(data)  
-        { 
-        if(!data)    
-            {
-            console.log("deconnection")
-            window.open("/",'_self')
-            }
-        } )
-    },1000)

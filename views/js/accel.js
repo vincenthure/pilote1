@@ -15,19 +15,3 @@ window.onload = function(e)
         },200)                   
     }
     
-document.addEventListener('DOMContentLoaded', function() {
-    var elems = document.querySelectorAll('.sidenav');
-    var instances = M.Sidenav.init(elems, );
-  });
-
-setInterval(function()
-    {
-    $.get(  "http://localhost:8081/connected", function(data)  
-        { 
-        if(!data)    
-            {
-            console.log("deconnection")
-            window.open("/",'_self')
-            }
-        } )
-    },1000)

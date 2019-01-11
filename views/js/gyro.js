@@ -29,20 +29,3 @@ window.onload = function(e)
     }
     
 document.getElementById("save").addEventListener("click", function()  { $.get("http://localhost:8081/calibration", { value:"gyro" })})
-
-document.addEventListener('DOMContentLoaded', function() {
-    var elems = document.querySelectorAll('.sidenav');
-    var instances = M.Sidenav.init(elems, );
-  });
-
-setInterval(function()
-    {
-    $.get(  "http://localhost:8081/connected", function(data)  
-        { 
-        if(!data)    
-            {
-            console.log("deconnection")
-            window.open("/",'_self')
-            }
-        } )
-    },1000)

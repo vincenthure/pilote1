@@ -1,21 +1,21 @@
 const express = require('express')
 const app = express()
 
-app.use(express.static('public'))
+app.use(express.static('views'))
+app.set('view engine', 'ejs');
 
 
-
-function page(res, html)
+function page(res, file, titre )
 	{
-	if(connection) { res.sendFile( html,        { root : __dirname + "/public/" } )  }
-	else           { res.sendFile( "wait.html", { root : __dirname + "/public/" } )  }
+	if(connection) { res.render( "pages/"+file, { titre : titre } )  }
+	else           { res.render( "pages/wait"  )  }
 	}
 
-app.get('/',               function (req, res) { page(res,"cap.html")     })
-app.get('/gyroscope',      function (req, res) { page(res,"gyro.html")    })
-app.get('/accelerometre',  function (req, res) { page(res,"accel.html")   })
-app.get('/asservissement', function (req, res) { page(res,"pid.html")     })
-app.get('/magnetometre',   function (req, res) { page(res,"magneto.html") })
+app.get('/',               function (req, res) { page(res, "cap",     "Auto Pilote")    })
+app.get('/gyroscope',      function (req, res) { page(res, "gyro",    "Gyroscope")      })
+app.get('/accelerometre',  function (req, res) { page(res, "accel",   "Accéléromètre")  })
+app.get('/asservissement', function (req, res) { page(res, "pid",     "Asservissement") })
+app.get('/magnetometre',   function (req, res) { page(res, "magneto", "Magnetomètre")   })
 
 app.get('/connected', function ( req,res )
 	{
