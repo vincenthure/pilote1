@@ -3,13 +3,25 @@ const app = express()
 
 app.use(express.static('public'))
 
-PUBLIC = __dirname + "/public/"
 
-app.get('/',               function (req, res) { res.sendFile( "cap.html",       { root : PUBLIC } ); })
-app.get('/gyroscope',      function (req, res) { res.sendFile( "gyro.html",      { root : PUBLIC } ); })
-app.get('/accelerometre',  function (req, res) { res.sendFile( "accel.html",     { root : PUBLIC } ); })
-app.get('/asservissement', function (req, res) { res.sendFile( "pid.html",       { root : PUBLIC } ); })
-app.get('/magnetometre',   function (req, res) { res.sendFile( "magneto.html",   { root : PUBLIC } ); })
+
+function page(res, html)
+	{
+	if(connection) { res.sendFile( html,        { root : __dirname + "/public/" } )  }
+	else           { res.sendFile( "wait.html", { root : __dirname + "/public/" } )  }
+	}
+
+app.get('/',               function (req, res) { page(res,"cap.html")     })
+app.get('/gyroscope',      function (req, res) { page(res,"gyro.html")    })
+app.get('/accelerometre',  function (req, res) { page(res,"accel.html")   })
+app.get('/asservissement', function (req, res) { page(res,"pid.html")     })
+app.get('/magnetometre',   function (req, res) { page(res,"magneto.html") })
+
+app.get('/connected', function ( req,res )
+	{
+	if( connection ) { res.send(true)  }
+	else             { res.send(false) }
+	})
 
 var server = app.listen(8081, function () 
 	{  
@@ -28,9 +40,10 @@ const PID              = 2
 const CAPTEUR          = 3
 const CALIBRATION      = 4
 
-var noble    = require('noble');
 
-var timerID;
+var noble = require('noble');
+
+var connection = false
 
 //************** Start Scanning
 
@@ -59,13 +72,15 @@ noble.on('discover',function(peripheral)
 					
 		peripheral.once('disconnect', function() 
 			{
-			console.log('on -> disconnect');
+			console.log('Deconnection');
+			connection = false
 			noble.startScanning([SERVICE_UUID],false);
 			});
 
 		peripheral.once('connect', function() 
 			{
-			console.log('connection');
+			console.log('Connection');
+			connection = true 
 			peripheral.discoverSomeServicesAndCharacteristics(
 				[
 				SERVICE_UUID

@@ -1,8 +1,17 @@
+//////////////////  installation ///////////////
+
 git clone https://github.com/vincenthure/pilote1.git
 cd pilote1
 npm update
-sudo node app.js
+sudo apt-get install libcap2-bin
+sudo setcap cap_net_raw+eip $(eval readlink -f `which node`)
+node app.js
+
+
+///////////////// mise à jour //////////////////
 
 git add --all
 git commit -m "new commit"
 git push
+name vincenthure
+pdm Mx9wed25
