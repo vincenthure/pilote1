@@ -101,23 +101,24 @@ noble.on('discover',function(peripheral)
 				console.log('characteristics CAPTEUR    : ' + characteristics[CAPTEUR].uuid);
 				console.log('characteristics CALIBRATION: ' + characteristics[CALIBRATION].uuid);
 				
-				app.get('/cap', function (req, res) 
+				app.get('/capSet', function (req, res) 
 						{
-						console.log("cap")
-						if(req.query.value)
-							{
-							console.log("change "+req.query.value);
-							characteristics[CAP].write(new Buffer([req.query.value]), false, function(error){})
-							}
+						console.log("capSet")
+						characteristics[CAP].write(new Buffer([req.query.value]), false, function(error){})
+						res.send(true)
+						})
+						
+				app.get('/capGet', function (req, res) 		
+						{
+						console.log("capGet")
 						characteristics[CAP].read( function(error,data) 
 							{ 
 							const buf = Buffer.from(data);
 							res.end(JSON.stringify(buf.readFloatBE(0)));
-							console.log('cap: '+Math.round(buf.readFloatBE(0))) 
 							});
 						})
 
-				app.get('/data', function (req, res) 
+				app.get('/dataGet', function (req, res) 
 						{
 						characteristics[DATA].read( function(error,data) 
 							{ 
@@ -126,14 +127,23 @@ noble.on('discover',function(peripheral)
 							});
 						})
 													
-				app.get('/pid', function (req, res) 
+				app.get('/pidSet', function (req, res) 
 						{
-						console.log("pid")
-						if(req.query.value)
-							{
-							console.log("write : "+req.query.value)
-							characteristics[PID].write(new Buffer(req.query.value), false, function(error){})
-							}
+						console.log("pidSet : "+req.query.value)
+						characteristics[PID].write(new Buffer(req.query.value), false, function(error){})
+						res.send(true)
+						})
+						
+				app.get('/pidSave', function (req, res) 
+						{
+						console.log("pidSave")
+						characteristics[PID].write(new Buffer("pidSave"), false, function(error){})
+						res.send(true)
+						})
+				
+				app.get('/pidGet', function (req, res) 		
+						{
+						console.log("pidGet")
 						characteristics[PID].read( function(error,data) 
 							{ 
 							const buf = Buffer.from(data);
@@ -145,7 +155,7 @@ noble.on('discover',function(peripheral)
 							});
 						})
 
-				app.get('/capteur', function (req, res) 
+				app.get('/capteurGet', function (req, res) 
 						{
 						characteristics[CAPTEUR].read( function(error,data) 
 							{ 
@@ -164,14 +174,15 @@ noble.on('discover',function(peripheral)
 							});
 						})
 						
-				app.get('/calibration', function (req, res) 
+				app.get('/calibrationSaveGyro', function (req, res) 
 						{
-						console.log("calibration")
-						if(req.query.value)
-							{
-							console.log("calibration save "+req.query.value);
-							characteristics[CALIBRATION].write(new Buffer(req.query.value), false, function(error){})
-							}
+						console.log("calibrationSaveGyro")
+						characteristics[CALIBRATION].write(new Buffer("gyro"), false, function(error){})
+						res.send(true)
+						})
+				
+				app.get('/calibrationGet', function (req, res)
+						{
 						characteristics[CALIBRATION].read( function(error,data)
 							{
 							const buf = Buffer.from(data);

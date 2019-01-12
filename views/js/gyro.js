@@ -1,7 +1,15 @@
 window.onload = function(e)
     {
-    $.get   (
-            "http://localhost:8081/calibration",
+    get_calibration_gyro()
+    setInterval(function() { get_capteur_gyro() },200)  
+    }
+    
+document.getElementById("save").addEventListener("click", function()  { set_calibration_gyro() })
+
+function get_calibration_gyro()
+    {
+     $.get   (
+            URL+"calibrationGet",
             function(json_data)
                 {
                 data= JSON.parse(json_data)
@@ -11,21 +19,29 @@ window.onload = function(e)
                 document.getElementById( "zo"  ).innerHTML  = data[2]        
                 }
             )
-    
-    setInterval(function()
-        {
-        $.get   (
-                "http://localhost:8081/capteur",
-                function(json_data)
-                    {
-                    data= JSON.parse(json_data)
-
-                    document.getElementById( "x"  ).innerHTML  = data[6].toFixed(2) 
-                    document.getElementById( "y"  ).innerHTML  = data[7].toFixed(2) 
-                    document.getElementById( "z"  ).innerHTML  = data[8].toFixed(2)              
-                    }
-                )
-        },200)  
     }
     
-document.getElementById("save").addEventListener("click", function()  { $.get("http://localhost:8081/calibration", { value:"gyro" })})
+function set_calibration_gyro()
+    {
+    $.get(  URL+"calibrationSaveGyro", 
+            function(jsondata)  { 
+                                get_calibration_gyro() 
+                                console.log("get gyro") 
+                                }
+                                )
+    }
+    
+function get_capteur_gyro()
+    {
+    $.get   (
+            URL+"capteurGet",
+            function(json_data)
+                {
+                data= JSON.parse(json_data)
+
+                document.getElementById( "x"  ).innerHTML  = data[6].toFixed(2) 
+                document.getElementById( "y"  ).innerHTML  = data[7].toFixed(2) 
+                document.getElementById( "z"  ).innerHTML  = data[8].toFixed(2)              
+                }
+            )
+   }

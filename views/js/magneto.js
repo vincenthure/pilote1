@@ -1,34 +1,53 @@
-
 window.onload = function(e)
     {
     document.getElementById( "mxm" ).innerHTML  = 4
     document.getElementById( "mym" ).innerHTML  = 5
     document.getElementById( "mzm" ).innerHTML  = 6
-    $.get   (
-            "http://localhost:8081/calibration",
+    
+    get_calibration_magneto()
+                            
+    setInterval(function()
+        {
+        get_capteur_magneto()
+        }
+        ,200)
+    }
+    
+document.getElementById("save").addEventListener("click", function()  { set_calibration_magneto() })
+
+function get_calibration_magneto()
+    {
+     $.get   (
+            URL+"calibrationGet",
             function(json_data)
                 {
                 data= JSON.parse(json_data)
 
-                document.getElementById( "mxo"  ).innerHTML  = data[3] 
-                document.getElementById( "myo"  ).innerHTML  = data[4]
-                document.getElementById( "mzo"  ).innerHTML  = data[5]  
+                document.getElementById( "mxo"  ).innerHTML  = data[3]
+                document.getElementById( "myo"  ).innerHTML  = data[5]
+                document.getElementById( "mzo"  ).innerHTML  = data[5]        
                 }
             )
-                            
-    setInterval(function()
-        {
-        $.get   (
-                "http://localhost:8081/capteur",
-                function(json_data)
-                    {
-                    data= JSON.parse(json_data)
-                    document.getElementById( "mx"  ).innerHTML  = data[3]
-                    document.getElementById( "my"  ).innerHTML  = data[4]
-                    document.getElementById( "mz"  ).innerHTML  = data[5]              
-                    }
-                )
-        },200)
     }
     
-document.getElementById("save").addEventListener("click", function()  { $.get("http://localhost:8081/calibration", { value:"magneto" }) })
+function set_calibration_magneto()
+    {
+    $.get(  URL+"calibrationSet", 
+            { value:"magneto" }),
+            function() { get_calibration_magneto() }
+    }
+    
+function get_capteur_magneto()
+    {
+    $.get   (
+            URL+"capteurGet",
+            function(json_data)
+                {
+                data= JSON.parse(json_data)
+
+                document.getElementById( "mx"  ).innerHTML  = data[3]
+                document.getElementById( "my"  ).innerHTML  = data[4]
+                document.getElementById( "mz"  ).innerHTML  = data[5]              
+                }
+            )
+   }

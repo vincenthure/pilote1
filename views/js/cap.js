@@ -1,20 +1,20 @@
 window.onload = function(e){ get_cap() }
 
-document.getElementById("cap_m10").addEventListener("click", function()  { change_cap( -10 ) })
-document.getElementById("cap_m1" ).addEventListener("click", function()  { change_cap(  -1 ) })
-document.getElementById("cap_set").addEventListener("click", function()  { change_cap(   0 ) })
-document.getElementById("cap_p1" ).addEventListener("click", function()  { change_cap(  +1 ) })
-document.getElementById("cap_p10").addEventListener("click", function()  { change_cap( +10 ) })
+document.getElementById("-10").addEventListener("click", function()  { change_cap( -10 ) })
+document.getElementById("-1" ).addEventListener("click", function()  { change_cap(  -1 ) })
+document.getElementById("set").addEventListener("click", function()  { change_cap(   0 ) })
+document.getElementById("+1" ).addEventListener("click", function()  { change_cap(  +1 ) })
+document.getElementById("+10").addEventListener("click", function()  { change_cap( +10 ) })
     
 function change_cap(x)
     {
-    $.get(  "http://localhost:8081/cap", 
+    $.get(  URL+"capSet", 
             { value:x },
-            function(data) { document.getElementById("cap").innerHTML = Math.round(data).toString() });
+            function(data) { get_cap() });
     }
 
 function get_cap()
     {
-    $.get(  "http://localhost:8081/cap", 
+    $.get(  URL+"capGet", 
             function(data) { document.getElementById("cap").innerHTML = Math.round(data).toString() });
     }
