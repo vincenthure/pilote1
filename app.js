@@ -1,3 +1,5 @@
+//****************** express **********************************************
+
 const express = require('express')
 const app = express()
 
@@ -28,6 +30,8 @@ var server = app.listen(8081, function ()
     console.log("connetez vous à http://localhost:%s", server.address().port)
 	})
 
+//***************** Noble ***********************************************
+
 const SERVICE_UUID     = 'ff10'
 const CAP_UUID         = 'ff17'
 const DATA_UUID        = 'ff18'
@@ -39,7 +43,6 @@ const DATA             = 1
 const PID              = 2
 const CAPTEUR          = 3
 const CALIBRATION      = 4
-
 
 var noble = require('noble');
 
@@ -68,7 +71,6 @@ noble.on('discover',function(peripheral)
 		{
 		console.log("Discover");
 		noble.stopScanning();
-		peripheral.connect();
 					
 		peripheral.once('disconnect', function() 
 			{
@@ -77,7 +79,7 @@ noble.on('discover',function(peripheral)
 			noble.startScanning([SERVICE_UUID],false);
 			});
 
-		peripheral.once('connect', function() 
+		peripheral.connect( function() 
 			{
 			console.log('Connection');
 			connection = true 

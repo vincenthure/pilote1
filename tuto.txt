@@ -1,4 +1,4 @@
-//////////////////  installation ///////////////
+//////////////////  installation remote ///////////////
 
 curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
 sudo apt install -y nodejs
@@ -13,6 +13,40 @@ npm install
 
 node app.js
 
+//////////////////  installation pilote ///////////////
+
+curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
+sudo apt install -y nodejs
+
+sudo apt-get install libcap2-bin
+sudo setcap cap_net_raw+eip $(eval readlink -f `which node`)
+
+git clone https://github.com/vincenthure/pilote2.git
+cd pilote2
+
+npm install
+
+node bleno.js
+
+cd /etc/systemd/system
+sudo nano pilote.service
+
+[Unit]
+Description=Pilote
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/node /home/pi/pilote2/bleno.js
+StandardOutput=inherit
+StandardError=inherit
+Restart=always
+
+[Install]
+WantedBy=default.target
+
+sudo chmod 777 pilote.service
+sudo systemctl start pilote.service
+sudo systemctl enable pilote.service
 
 ///////////////// mise à jour //////////////////
 
