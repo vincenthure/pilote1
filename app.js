@@ -104,8 +104,17 @@ noble.on('discover',function(peripheral)
 				app.get('/capSet', function (req, res) 
 						{
 						console.log("capSet")
-						characteristics[CAP].write(new Buffer([req.query.value]), false, function(error){})
-						res.send(true)
+						characteristics[CAP].write(new Buffer([req.query.value]), false, function(error)
+							{
+							if(!error)
+								{
+								res.send(true)
+								}
+							else
+								{
+								res.send(false)
+								}
+							})
 						})
 						
 				app.get('/capGet', function (req, res) 		
@@ -113,8 +122,15 @@ noble.on('discover',function(peripheral)
 						console.log("capGet")
 						characteristics[CAP].read( function(error,data) 
 							{ 
-							const buf = Buffer.from(data);
-							res.end(JSON.stringify(buf.readFloatBE(0)));
+							if(!error)
+								{
+								const buf = Buffer.from(data);
+								res.end(JSON.stringify(buf.readFloatBE(0)));
+								}
+							else
+								{
+								res.send(false)
+								}
 							});
 						})
 
@@ -122,23 +138,49 @@ noble.on('discover',function(peripheral)
 						{
 						characteristics[DATA].read( function(error,data) 
 							{ 
-							const buf = Buffer.from(data);
-							res.end(JSON.stringify([buf.readFloatBE(0),buf.readFloatBE(4)]));
+							if(!error)
+								{
+								const buf = Buffer.from(data);
+								res.end(JSON.stringify([buf.readFloatBE(0),buf.readFloatBE(4)]));
+								}
+							else
+								{
+								res.send(false)
+								}
+							
 							});
 						})
 													
 				app.get('/pidSet', function (req, res) 
 						{
 						console.log("pidSet : "+req.query.value)
-						characteristics[PID].write(new Buffer(req.query.value), false, function(error){})
-						res.send(true)
+						characteristics[PID].write(new Buffer(req.query.value), false, function(error)
+							{
+							if(!error)
+								{
+								res.send(true)
+								}
+							else
+								{
+								res.send(false)
+								}
+							})
 						})
 						
 				app.get('/pidSave', function (req, res) 
 						{
 						console.log("pidSave")
-						characteristics[PID].write(new Buffer("pidSave"), false, function(error){})
-						res.send(true)
+						characteristics[PID].write(new Buffer("pidSave"), false, function(error)
+							{
+							if(!error)
+								{
+								res.send(true)
+								}
+							else
+								{
+								res.send(false)
+								}
+							})
 						})
 				
 				app.get('/pidGet', function (req, res) 		
@@ -146,12 +188,20 @@ noble.on('discover',function(peripheral)
 						console.log("pidGet")
 						characteristics[PID].read( function(error,data) 
 							{ 
-							const buf = Buffer.from(data);
-							res.end(JSON.stringify(	[
-													buf.readFloatBE(0),
-													buf.readFloatBE(4),
-													buf.readFloatBE(8)
-													]))
+							if(!error)
+								{
+								const buf = Buffer.from(data);
+								res.end(JSON.stringify(	[
+														buf.readFloatBE(0),
+														buf.readFloatBE(4),
+														buf.readFloatBE(8)
+														]))
+								}
+							else
+								{
+								res.send(false)
+								}
+							
 							});
 						})
 
@@ -159,42 +209,66 @@ noble.on('discover',function(peripheral)
 						{
 						characteristics[CAPTEUR].read( function(error,data) 
 							{ 
-							const buf = Buffer.from(data);
-							res.end(JSON.stringify(	[
-													buf.readFloatBE(0),
-													buf.readFloatBE(4),
-													buf.readFloatBE(8),
-													buf.readFloatBE(12),
-													buf.readFloatBE(16),
-													buf.readFloatBE(20),
-													buf.readFloatBE(24),
-													buf.readFloatBE(28),
-													buf.readFloatBE(32)
-													]))
+							if(!error)
+								{
+								const buf = Buffer.from(data);
+								res.end(JSON.stringify(	[
+														buf.readFloatBE(0),
+														buf.readFloatBE(4),
+														buf.readFloatBE(8),
+														buf.readFloatBE(12),
+														buf.readFloatBE(16),
+														buf.readFloatBE(20),
+														buf.readFloatBE(24),
+														buf.readFloatBE(28),
+														buf.readFloatBE(32)
+														]))
+								}
+							else
+								{
+								res.send(false)
+								}
 							});
 						})
 						
 				app.get('/calibrationSaveGyro', function (req, res) 
 						{
 						console.log("calibrationSaveGyro")
-						characteristics[CALIBRATION].write(new Buffer("gyro"), false, function(error){})
-						res.send(true)
+						characteristics[CALIBRATION].write(new Buffer("gyro"), false, function(error)
+							{
+							if(!error)
+								{
+								res.send(true)
+								}
+							else
+								{
+								res.send(false)
+								}
+							})
 						})
 				
 				app.get('/calibrationGet', function (req, res)
 						{
 						characteristics[CALIBRATION].read( function(error,data)
 							{
-							const buf = Buffer.from(data);
-							res.send(JSON.stringify([
-													buf.readFloatBE(0),
-													buf.readFloatBE(4),
-													buf.readFloatBE(8),
-													buf.readFloatBE(12),
-													buf.readFloatBE(16),
-													buf.readFloatBE(20)
-													]
-													))
+							if(!error)
+								{
+								const buf = Buffer.from(data);
+								res.send(JSON.stringify([
+														buf.readFloatBE(0),
+														buf.readFloatBE(4),
+														buf.readFloatBE(8),
+														buf.readFloatBE(12),
+														buf.readFloatBE(16),
+														buf.readFloatBE(20)
+														]
+														))
+								}
+							else
+								{
+								res.send(false)
+								}
+							
 							})
 						})
 				})

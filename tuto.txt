@@ -1,10 +1,16 @@
 //////////////////  installation ///////////////
 
-git clone https://github.com/vincenthure/pilote1.git
-cd pilote1
-npm update
+curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
+sudo apt install -y nodejs
+
 sudo apt-get install libcap2-bin
 sudo setcap cap_net_raw+eip $(eval readlink -f `which node`)
+
+git clone https://github.com/vincenthure/pilote1.git
+cd pilote1
+
+npm install
+
 node app.js
 
 
