@@ -13,7 +13,7 @@ window.onload = function(e)
         ,200)
     }
     
-document.getElementById("save").addEventListener("click", function()  { set_calibration_magneto() })
+document.getElementById("save").addEventListener("click", function()  { save_calibration_magneto() })
 
 function get_calibration_magneto()
     {
@@ -30,10 +30,10 @@ function get_calibration_magneto()
             )
     }
     
-function set_calibration_magneto()
+function save_calibration_magneto()
     {
-    $.get(  URL+"calibrationSet", 
-            { value:"magneto" }),
+    $.get(  URL+"commande", 
+            { value:"magnetoSave" }),
             function() { get_calibration_magneto() }
     }
     

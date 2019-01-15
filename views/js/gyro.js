@@ -4,7 +4,7 @@ window.onload = function(e)
     setInterval(function() { get_capteur_gyro() },200)  
     }
     
-document.getElementById("save").addEventListener("click", function()  { set_calibration_gyro() })
+document.getElementById("save").addEventListener("click", function()  { save_calibration_gyro() })
 
 function get_calibration_gyro()
     {
@@ -21,9 +21,10 @@ function get_calibration_gyro()
             )
     }
     
-function set_calibration_gyro()
+function save_calibration_gyro()
     {
-    $.get(  URL+"calibrationSaveGyro", 
+    $.get(  URL+"commande", 
+            { value:"gyroSave" },
             function(jsondata)  { 
                                 get_calibration_gyro() 
                                 console.log("get gyro") 

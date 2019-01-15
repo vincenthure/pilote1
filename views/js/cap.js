@@ -1,14 +1,14 @@
 window.onload = function(e){ get_cap() }
 
-document.getElementById("-10").addEventListener("click", function()  { change_cap( -10 ) })
-document.getElementById("-1" ).addEventListener("click", function()  { change_cap(  -1 ) })
-document.getElementById("set").addEventListener("click", function()  { change_cap(   0 ) })
-document.getElementById("+1" ).addEventListener("click", function()  { change_cap(  +1 ) })
-document.getElementById("+10").addEventListener("click", function()  { change_cap( +10 ) })
+document.getElementById("-10").addEventListener("click", function()  { change_cap( 'cap--'  ) })
+document.getElementById("-1" ).addEventListener("click", function()  { change_cap( 'cap-'   ) })
+document.getElementById("set").addEventListener("click", function()  { change_cap( 'capset' ) })
+document.getElementById("+1" ).addEventListener("click", function()  { change_cap( 'cap+'   ) })
+document.getElementById("+10").addEventListener("click", function()  { change_cap( 'cap++'  ) })
     
 function change_cap(x)
     {
-    $.get(  URL+"capSet", 
+    $.get(  URL+"commande", 
             { value:x },
             function(data) { get_cap() });
     }

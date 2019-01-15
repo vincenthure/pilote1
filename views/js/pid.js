@@ -28,7 +28,7 @@ function get_pid()
 function set_pid( value )
     {
     $.get   (  
-            URL+"pidSet",
+            URL+"commande",
             { value : value },
             function(json_data) {   get_pid() }
             ) 
@@ -36,8 +36,10 @@ function set_pid( value )
 
 function save_pid()
     {
-    $.get( URL+"pidSave" ) 
-    }
+    $.get   ( 
+            URL+"commande",
+            { value : "pidSave" }
+            )     }
     
 function slider(input,output)
     {

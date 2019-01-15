@@ -18,6 +18,7 @@ app.get('/gyroscope',      function (req, res) { page(res, "gyro",    "Gyroscope
 app.get('/accelerometre',  function (req, res) { page(res, "accel",   "Accéléromètre")  })
 app.get('/asservissement', function (req, res) { page(res, "pid",     "Asservissement") })
 app.get('/magnetometre',   function (req, res) { page(res, "magneto", "Magnetomètre")   })
+app.get('/power',          function (req, res) { page(res, "power",   "Power")          })
 
 app.get('/connected', function ( req,res )
 	{
@@ -38,11 +39,13 @@ const DATA_UUID        = 'ff18'
 const PID_UUID         = 'ff19'
 const CAPTEUR_UUID     = 'ff20'
 const CALIBRATION_UUID = 'ff21'
+const COMMANDE_UUID       = 'ff22'
 const CAP              = 0
 const DATA             = 1
 const PID              = 2
 const CAPTEUR          = 3
 const CALIBRATION      = 4
+const COMMANDE            = 5
 
 var noble = require('noble');
 
@@ -92,7 +95,8 @@ noble.on('discover',function(peripheral)
 				DATA_UUID,
 				PID_UUID,
 				CAPTEUR_UUID,
-				CALIBRATION_UUID
+				CALIBRATION_UUID,
+				COMMANDE_UUID
 				], 
 				function(error, services, characteristics) 
 				{
@@ -102,22 +106,7 @@ noble.on('discover',function(peripheral)
 				console.log('characteristics PID        : ' + characteristics[PID].uuid);
 				console.log('characteristics CAPTEUR    : ' + characteristics[CAPTEUR].uuid);
 				console.log('characteristics CALIBRATION: ' + characteristics[CALIBRATION].uuid);
-				
-				app.get('/capSet', function (req, res) 
-						{
-						console.log("capSet")
-						characteristics[CAP].write(new Buffer([req.query.value]), false, function(error)
-							{
-							if(!error)
-								{
-								res.send(true)
-								}
-							else
-								{
-								res.send(false)
-								}
-							})
-						})
+				console.log('characteristics COMMANDE   : ' + characteristics[COMMANDE].uuid);
 						
 				app.get('/capGet', function (req, res) 		
 						{
@@ -131,6 +120,7 @@ noble.on('discover',function(peripheral)
 								}
 							else
 								{
+								console.log(error)
 								res.send(false)
 								}
 							});
@@ -147,42 +137,11 @@ noble.on('discover',function(peripheral)
 								}
 							else
 								{
+								console.log(error)
 								res.send(false)
 								}
 							
 							});
-						})
-													
-				app.get('/pidSet', function (req, res) 
-						{
-						console.log("pidSet : "+req.query.value)
-						characteristics[PID].write(new Buffer(req.query.value), false, function(error)
-							{
-							if(!error)
-								{
-								res.send(true)
-								}
-							else
-								{
-								res.send(false)
-								}
-							})
-						})
-						
-				app.get('/pidSave', function (req, res) 
-						{
-						console.log("pidSave")
-						characteristics[PID].write(new Buffer("pidSave"), false, function(error)
-							{
-							if(!error)
-								{
-								res.send(true)
-								}
-							else
-								{
-								res.send(false)
-								}
-							})
 						})
 				
 				app.get('/pidGet', function (req, res) 		
@@ -201,6 +160,7 @@ noble.on('discover',function(peripheral)
 								}
 							else
 								{
+								console.log(error)
 								res.send(false)
 								}
 							
@@ -228,25 +188,10 @@ noble.on('discover',function(peripheral)
 								}
 							else
 								{
+								console.log(error)
 								res.send(false)
 								}
 							});
-						})
-						
-				app.get('/calibrationSaveGyro', function (req, res) 
-						{
-						console.log("calibrationSaveGyro")
-						characteristics[CALIBRATION].write(new Buffer("gyro"), false, function(error)
-							{
-							if(!error)
-								{
-								res.send(true)
-								}
-							else
-								{
-								res.send(false)
-								}
-							})
 						})
 				
 				app.get('/calibrationGet', function (req, res)
@@ -268,9 +213,27 @@ noble.on('discover',function(peripheral)
 								}
 							else
 								{
+								console.log(error)
 								res.send(false)
 								}
 							
+							})
+						})
+				
+				app.get('/commande', function (req, res) 
+						{
+						console.log("commande : "+req.query.value)
+						characteristics[COMMANDE].write(new Buffer(req.query.value), false, function(error)
+							{
+							if(!error)
+								{
+								res.send(true)
+								}
+							else
+								{
+								console.log(error)
+								res.send(false)
+								}
 							})
 						})
 				})
