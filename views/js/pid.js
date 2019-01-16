@@ -1,6 +1,6 @@
 window.onload = function(e) { get_pid() }
 
-document.getElementById("save").addEventListener("click", function()  { save_pid() })
+document.getElementById("save").addEventListener("click", function()  { commande("pidSave") })
 
 document.getElementById("kp-").addEventListener("click", function()  { set_pid("kp-") })
 document.getElementById("kp+").addEventListener("click", function()  { set_pid("kp+") })
@@ -34,13 +34,6 @@ function set_pid( value )
             ) 
     }
 
-function save_pid()
-    {
-    $.get   ( 
-            URL+"commande",
-            { value : "pidSave" }
-            )     }
-    
 function slider(input,output)
     {
     const style = "' height='20' rx='10' fill='#42a5f5' />"

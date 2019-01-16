@@ -1,4 +1,4 @@
-const URL   = "http://localhost:8081/"
+const URL   = document.location.origin+'/'
 
 setInterval(function()
     {
@@ -11,3 +11,11 @@ setInterval(function()
             }
         } )
     },1000)
+    
+function commande(str)
+    {
+    $.get   ( 
+            URL+"commande",
+            { value : str }
+            ) 
+    }

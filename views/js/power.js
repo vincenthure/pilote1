@@ -1,23 +1,12 @@
 
 
-document.getElementById("eteindre").addEventListener(  "click", function()  { power_off() })
-document.getElementById("redemarrer").addEventListener("click", function()  { reboot()    })
+document.getElementById("eteindre").addEventListener(  "click", function()  { commande("shutdown") })
+document.getElementById("redemarrer").addEventListener("click", function()  { commande("reboot")    })
+document.getElementById("reload").addEventListener("click", function()      { reload()    })
 
-
-
-function power_off()
+function reload()
     {
-    $.get   ( 
-            URL+"commande",
-            { value : "shutdown" }
-            ) 
-    }
-
-function reboot()
-    {
-    $.get   ( 
-            URL+"commande",
-            { value : "reboot" }
-            ) 
+    $.get( URL+"reload" )
+    console.log("reload")
     }
 

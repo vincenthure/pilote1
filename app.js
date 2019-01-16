@@ -1,6 +1,7 @@
 //****************** express **********************************************
 
 const express = require('express')
+const exeCute    = require('exe')
 const app = express()
 
 app.use(express.static('views'))
@@ -26,6 +27,12 @@ app.get('/connected', function ( req,res )
 	else             { res.send(false) }
 	})
 
+app.get('/reload', function (req, res) 		
+	{
+	console.log("reload")
+	exeCute("./reload.sh")
+	})
+								
 var server = app.listen(8081, function () 
 	{  
     console.log("connetez vous à http://localhost:%s", server.address().port)
@@ -39,13 +46,13 @@ const DATA_UUID        = 'ff18'
 const PID_UUID         = 'ff19'
 const CAPTEUR_UUID     = 'ff20'
 const CALIBRATION_UUID = 'ff21'
-const COMMANDE_UUID       = 'ff22'
+const COMMANDE_UUID    = 'ff22'
 const CAP              = 0
 const DATA             = 1
 const PID              = 2
 const CAPTEUR          = 3
 const CALIBRATION      = 4
-const COMMANDE            = 5
+const COMMANDE         = 5
 
 var noble = require('noble');
 
@@ -107,7 +114,7 @@ noble.on('discover',function(peripheral)
 				console.log('characteristics CAPTEUR    : ' + characteristics[CAPTEUR].uuid);
 				console.log('characteristics CALIBRATION: ' + characteristics[CALIBRATION].uuid);
 				console.log('characteristics COMMANDE   : ' + characteristics[COMMANDE].uuid);
-						
+				
 				app.get('/capGet', function (req, res) 		
 						{
 						console.log("capGet")
