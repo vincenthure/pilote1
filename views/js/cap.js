@@ -16,5 +16,16 @@ function change_cap(x)
 function get_cap()
     {
     $.get(  URL+"capGet", 
-            function(data) { document.getElementById("cap").innerHTML = Math.round(data).toString() });
+            function(data) {
+                            var str = Math.round(data).toString()
+                            if( str=='NaN' )
+                                {
+                                setTimeout(function(){ get_cap() }, 1000);
+                                document.getElementById("cap").innerHTML = "non disponible"
+                                }
+                            else
+                                {
+                                document.getElementById("cap").innerHTML = str+'°'
+                                }
+                            })
     }

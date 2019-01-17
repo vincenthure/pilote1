@@ -30,7 +30,7 @@ app.get('/connected', function ( req,res )
 app.get('/reload', function (req, res) 		
 	{
 	console.log("reload")
-	exeCute("./reload.sh")
+	exeCute("sudo systemctl restart pilote.service")
 	})
 								
 var server = app.listen(8081, function () 
@@ -85,8 +85,9 @@ noble.on('discover',function(peripheral)
 		peripheral.once('disconnect', function() 
 			{
 			console.log('Deconnection');
-			connection = false
-			noble.startScanning([SERVICE_UUID],false);
+			//connection = false
+			exeCute("sudo systemctl restart pilote.service")
+			//noble.startScanning([SERVICE_UUID],false);
 			});
 
 		peripheral.connect( function() 
@@ -106,16 +107,16 @@ noble.on('discover',function(peripheral)
 				COMMANDE_UUID
 				], 
 				function(error, services, characteristics) 
-				{
-				console.log('services                   : ' + services[0].uuid);
-				console.log('characteristics CAP        : ' + characteristics[CAP].uuid);
-				console.log('characteristics DATA       : ' + characteristics[DATA].uuid);
-				console.log('characteristics PID        : ' + characteristics[PID].uuid);
-				console.log('characteristics CAPTEUR    : ' + characteristics[CAPTEUR].uuid);
-				console.log('characteristics CALIBRATION: ' + characteristics[CALIBRATION].uuid);
-				console.log('characteristics COMMANDE   : ' + characteristics[COMMANDE].uuid);
+					{
+					console.log('services                   : ' + services[0].uuid);
+					console.log('characteristics CAP        : ' + characteristics[CAP].uuid);
+					console.log('characteristics DATA       : ' + characteristics[DATA].uuid);
+					console.log('characteristics PID        : ' + characteristics[PID].uuid);
+					console.log('characteristics CAPTEUR    : ' + characteristics[CAPTEUR].uuid);
+					console.log('characteristics CALIBRATION: ' + characteristics[CALIBRATION].uuid);
+					console.log('characteristics COMMANDE   : ' + characteristics[COMMANDE].uuid);
 				
-				app.get('/capGet', function (req, res) 		
+					app.get('/capGet', function (req, res) 		
 						{
 						console.log("capGet")
 						characteristics[CAP].read( function(error,data) 
@@ -133,7 +134,7 @@ noble.on('discover',function(peripheral)
 							});
 						})
 
-				app.get('/dataGet', function (req, res) 
+					app.get('/dataGet', function (req, res) 
 						{
 						characteristics[DATA].read( function(error,data) 
 							{ 
@@ -151,7 +152,7 @@ noble.on('discover',function(peripheral)
 							});
 						})
 				
-				app.get('/pidGet', function (req, res) 		
+					app.get('/pidGet', function (req, res) 		
 						{
 						console.log("pidGet")
 						characteristics[PID].read( function(error,data) 
@@ -174,7 +175,7 @@ noble.on('discover',function(peripheral)
 							});
 						})
 
-				app.get('/capteurGet', function (req, res) 
+					app.get('/capteurGet', function (req, res) 
 						{
 						characteristics[CAPTEUR].read( function(error,data) 
 							{ 
@@ -201,7 +202,7 @@ noble.on('discover',function(peripheral)
 							});
 						})
 				
-				app.get('/calibrationGet', function (req, res)
+					app.get('/calibrationGet', function (req, res)
 						{
 						characteristics[CALIBRATION].read( function(error,data)
 							{
@@ -227,7 +228,7 @@ noble.on('discover',function(peripheral)
 							})
 						})
 				
-				app.get('/commande', function (req, res) 
+					app.get('/commande', function (req, res) 
 						{
 						console.log("commande : "+req.query.value)
 						characteristics[COMMANDE].write(new Buffer(req.query.value), false, function(error)
