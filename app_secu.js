@@ -3,10 +3,16 @@
 const express = require('express')
 const exeCute    = require('exe')
 const app = express()
-var   characteristicPilote
 
 app.use(express.static('views'))
 app.set('view engine', 'ejs');
+
+
+function page(res, file, titre )
+	{
+	if(connection) { res.render( "pages/"+file, { titre : titre } )  }
+	else           { res.render( "pages/wait"  )  }
+	}
 
 app.get('/',               function (req, res) { page(res, "cap",     "Auto Pilote")    })
 app.get('/gyroscope',      function (req, res) { page(res, "gyro",    "Gyroscope")      })
@@ -26,92 +32,12 @@ app.get('/reload', function (req, res)
 	console.log("reload")
 	exeCute("sudo systemctl restart pilote.service")
 	})
-
-app.get('/capGet', function (req, res) 		
-	{
-	console.log("capGet")
-	get_data_from_pilote( CAP, res )
-	})
-
-app.get('/dataGet', function (req, res) 
-	{
-	get_data_from_pilote( DATA, res )
-	})
-				
-app.get('/pidGet', function (req, res) 		
-	{
-	console.log("pidGet")
-	get_data_from_pilote( PID, res )
-	})
-
-app.get('/capteurGet', function (req, res) 
-	{
-	get_data_from_pilote( CAPTEUR, res )
-	})
-				
-app.get('/calibrationGet', function (req, res)
-	{
-	console.log("calibrationGet")
-	get_data_from_pilote( CALIBRATION, res )
-	})
-				
-app.get('/commande', function (req, res) 
-	{
-	console.log("commande : "+req.query.value)
-	send_commande_to_pilote( req.query.value, res )
-	})		
-							
+								
 var server = app.listen(8081, function () 
 	{  
     console.log("connetez vous à http://localhost:%s", server.address().port)
 	})
 
-function get_data_from_pilote( item, res )
-	{
-	characteristicPilote[item].read( function(error,data) 
-		{ 
-		if(!error)
-			{
-			const buf = Buffer.from(data);
-			var length = buf.length/4
-			var array = []
-			for( var i=0; i<length; i++)
-				{
-				var j= i*4;
-				array[i] = buf.readFloatBE(j )
-				}
-			res.end(JSON.stringify(	array ))
-			}
-		else
-			{
-			console.log(error)
-			res.send(false)
-			}				
-		});		
-	}
-
-function send_commande_to_pilote( cmd, res )
-	{
-	characteristicPilote[COMMANDE].write(new Buffer(cmd), false, function(error)
-		{
-		if(!error)
-			{
-			res.send(true)
-			}
-		else
-			{
-			console.log(error)
-			res.send(false)
-			}
-		})
-	}
-
-function page(res, file, titre )
-	{
-	if(connection) { res.render( "pages/"+file, { titre : titre } )  }
-	else           { res.render( "pages/wait"  )  }
-	}
-	
 //***************** Noble ***********************************************
 
 const SERVICE_UUID     = 'ff10'
@@ -182,14 +108,142 @@ noble.on('discover',function(peripheral)
 				], 
 				function(error, services, characteristics) 
 					{
-					console.log('services UUID              : ' + services[0].uuid);
+					console.log('services                   : ' + services[0].uuid);
 					console.log('characteristics CAP        : ' + characteristics[CAP].uuid);
 					console.log('characteristics DATA       : ' + characteristics[DATA].uuid);
 					console.log('characteristics PID        : ' + characteristics[PID].uuid);
 					console.log('characteristics CAPTEUR    : ' + characteristics[CAPTEUR].uuid);
 					console.log('characteristics CALIBRATION: ' + characteristics[CALIBRATION].uuid);
 					console.log('characteristics COMMANDE   : ' + characteristics[COMMANDE].uuid);
-				    characteristicPilote = characteristics
+				
+					app.get('/capGet', function (req, res) 		
+						{
+						console.log("capGet")
+						characteristics[CAP].read( function(error,data) 
+							{ 
+							if(!error)
+								{
+								const buf = Buffer.from(data);
+								res.end(JSON.stringify(buf.readFloatBE(0)));
+								}
+							else
+								{
+								console.log(error)
+								res.send(false)
+								}
+							});
+						})
+
+					app.get('/dataGet', function (req, res) 
+						{
+						characteristics[DATA].read( function(error,data) 
+							{ 
+							if(!error)
+								{
+								const buf = Buffer.from(data);
+								res.end(JSON.stringify([buf.readFloatBE(0),buf.readFloatBE(4)]));
+								}
+							else
+								{
+								console.log(error)
+								res.send(false)
+								}
+							
+							});
+						})
+				
+					app.get('/pidGet', function (req, res) 		
+						{
+						console.log("pidGet")
+						characteristics[PID].read( function(error,data) 
+							{ 
+							if(!error)
+								{
+								const buf = Buffer.from(data);
+								res.end(JSON.stringify(	[
+														buf.readFloatBE(0),
+														buf.readFloatBE(4),
+														buf.readFloatBE(8)
+														]))
+								}
+							else
+								{
+								console.log(error)
+								res.send(false)
+								}
+							
+							});
+						})
+
+					app.get('/capteurGet', function (req, res) 
+						{
+						characteristics[CAPTEUR].read( function(error,data) 
+							{ 
+							if(!error)
+								{
+								const buf = Buffer.from(data);
+								res.end(JSON.stringify(	[
+														buf.readFloatBE(0),
+														buf.readFloatBE(4),
+														buf.readFloatBE(8),
+														buf.readFloatBE(12),
+														buf.readFloatBE(16),
+														buf.readFloatBE(20),
+														buf.readFloatBE(24),
+														buf.readFloatBE(28),
+														buf.readFloatBE(32)
+														]))
+								}
+							else
+								{
+								console.log(error)
+								res.send(false)
+								}
+							});
+						})
+				
+					app.get('/calibrationGet', function (req, res)
+						{
+						characteristics[CALIBRATION].read( function(error,data)
+							{
+							if(!error)
+								{
+								const buf = Buffer.from(data);
+								res.send(JSON.stringify([
+														buf.readFloatBE(0),
+														buf.readFloatBE(4),
+														buf.readFloatBE(8),
+														buf.readFloatBE(12),
+														buf.readFloatBE(16),
+														buf.readFloatBE(20)
+														]
+														))
+								}
+							else
+								{
+								console.log(error)
+								res.send(false)
+								}
+							
+							})
+						})
+				
+					app.get('/commande', function (req, res) 
+						{
+						console.log("commande : "+req.query.value)
+						characteristics[COMMANDE].write(new Buffer(req.query.value), false, function(error)
+							{
+							if(!error)
+								{
+								res.send(true)
+								}
+							else
+								{
+								console.log(error)
+								res.send(false)
+								}
+							})
+						})
 				})
 			})	
 		});

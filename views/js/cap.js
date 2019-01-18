@@ -16,8 +16,9 @@ function change_cap(x)
 function get_cap()
     {
     $.get(  URL+"capGet", 
-            function(data) {
-                            var str = Math.round(data).toString()
+            function(json_data) {
+                            data= JSON.parse(json_data)
+                            var str = Math.round(data[0]).toString()
                             if( str=='NaN' )
                                 {
                                 setTimeout(function(){ get_cap() }, 1000);
