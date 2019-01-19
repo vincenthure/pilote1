@@ -1,24 +1,17 @@
 //****************** express **********************************************
 
 const express = require('express')
-const exeCute    = require('exe')
+const exeCute = require('exe')
 const app = express()
 var   characteristicPilote
 
 app.use(express.static('views'))
 app.set('view engine', 'ejs');
 
-app.get('/',               function (req, res) { page(res, "cap",     "Auto Pilote")    })
-app.get('/gyroscope',      function (req, res) { page(res, "gyro",    "Gyroscope")      })
-app.get('/accelerometre',  function (req, res) { page(res, "accel",   "Accéléromètre")  })
-app.get('/asservissement', function (req, res) { page(res, "pid",     "Asservissement") })
-app.get('/magnetometre',   function (req, res) { page(res, "magneto", "Magnetomètre")   })
-app.get('/power',          function (req, res) { page(res, "power",   "Power")          })
-
 app.get('/connected', function ( req,res )
 	{
-	if( connection ) { res.send(true)  }
-	else             { res.send(false) }
+	if( connection ) res.send(true)  
+	else             res.send(false) 
 	})
 
 app.get('/reload', function (req, res) 		
@@ -27,6 +20,23 @@ app.get('/reload', function (req, res)
 	exeCute("sudo systemctl restart pilote.service")
 	})
 
+app.get('/remote', function (req, res) 		
+	{
+	console.log("remote "+req.query.value)
+	switch(req.query.value)
+		{
+		case 'service'  :	exeCute("sudo systemctl restart pilote.service")
+							break
+			
+		case 'shutdown' :	exeCute("sudo shutdown now")
+							break
+		
+		case 'reboot'   :	exeCute("sudo reboot")
+							break
+		}
+	res.send(true)
+	})
+	
 app.get('/capGet', function (req, res) 		
 	{
 	console.log("capGet")
@@ -60,7 +70,14 @@ app.get('/commande', function (req, res)
 	console.log("commande : "+req.query.value)
 	send_commande_to_pilote( req.query.value, res )
 	})		
-							
+
+app.get('/',               function (req, res) { res.render("pages/cap",    {titre:"Auto Pilote"})    })
+app.get('/gyroscope',      function (req, res) { res.render("pages/gyro",   {titre:"Gyroscope"})      })
+app.get('/accelerometre',  function (req, res) { res.render("pages/accel",  {titre:"Accéléromètre"})  })
+app.get('/asservissement', function (req, res) { res.render("pages/pid",    {titre:"Asservissement"}) })
+app.get('/magnetometre',   function (req, res) { res.render("pages/magneto",{titre:"Magnetomètre"})   })
+app.get('/power',          function (req, res) { res.render("pages/power",  {titre:"Power"})          })
+						
 var server = app.listen(8081, function () 
 	{  
     console.log("connetez vous à http://localhost:%s", server.address().port)
@@ -68,48 +85,56 @@ var server = app.listen(8081, function ()
 
 function get_data_from_pilote( item, res )
 	{
-	characteristicPilote[item].read( function(error,data) 
-		{ 
-		if(!error)
-			{
-			const buf = Buffer.from(data);
-			var length = buf.length/4
-			var array = []
-			for( var i=0; i<length; i++)
+	if(connection)
+		{
+		characteristicPilote[item].read( function(error,data) 
+			{ 
+			if(!error)
 				{
-				var j= i*4;
-				array[i] = buf.readFloatBE(j )
+				const buf = Buffer.from(data);
+				var length = buf.length/4
+				var array = []
+				for( var i=0; i<length; i++)
+					{
+					var j= i*4;
+					array[i] = buf.readFloatBE(j )
+					}
+				res.end(JSON.stringify(	array ))
 				}
-			res.end(JSON.stringify(	array ))
-			}
-		else
-			{
-			console.log(error)
-			res.send(false)
-			}				
-		});		
+			else
+				{
+				console.log(error)
+				res.send(false)
+				}				
+			});
+		}
+	else
+		{
+		res.send(false)
+		}			
 	}
 
 function send_commande_to_pilote( cmd, res )
 	{
-	characteristicPilote[COMMANDE].write(new Buffer(cmd), false, function(error)
+	if(connection)
 		{
-		if(!error)
+		characteristicPilote[COMMANDE].write(new Buffer(cmd), false, function(error)
 			{
-			res.send(true)
-			}
-		else
-			{
-			console.log(error)
-			res.send(false)
-			}
-		})
-	}
-
-function page(res, file, titre )
-	{
-	if(connection) { res.render( "pages/"+file, { titre : titre } )  }
-	else           { res.render( "pages/wait"  )  }
+			if(!error)
+				{
+				res.send(true)
+				}
+			else
+				{
+				console.log(error)
+				res.send(false)
+				}
+			})
+		}
+	else
+		{
+		res.send(false)
+		}
 	}
 	
 //***************** Noble ***********************************************
@@ -159,7 +184,7 @@ noble.on('discover',function(peripheral)
 		peripheral.once('disconnect', function() 
 			{
 			console.log('Deconnection');
-			//connection = false
+			connection = false
 			exeCute("sudo systemctl restart pilote.service")
 			//noble.startScanning([SERVICE_UUID],false);
 			});
@@ -169,28 +194,13 @@ noble.on('discover',function(peripheral)
 			console.log('Connection');
 			connection = true 
 			peripheral.discoverSomeServicesAndCharacteristics(
-				[
-				SERVICE_UUID
-				], 	
-				[
-				CAP_UUID,
-				DATA_UUID,
-				PID_UUID,
-				CAPTEUR_UUID,
-				CALIBRATION_UUID,
-				COMMANDE_UUID
-				], 
+				[SERVICE_UUID], 	
+				[CAP_UUID,DATA_UUID,PID_UUID,CAPTEUR_UUID,CALIBRATION_UUID,COMMANDE_UUID], 
 				function(error, services, characteristics) 
 					{
-					console.log('services UUID              : ' + services[0].uuid);
-					console.log('characteristics CAP        : ' + characteristics[CAP].uuid);
-					console.log('characteristics DATA       : ' + characteristics[DATA].uuid);
-					console.log('characteristics PID        : ' + characteristics[PID].uuid);
-					console.log('characteristics CAPTEUR    : ' + characteristics[CAPTEUR].uuid);
-					console.log('characteristics CALIBRATION: ' + characteristics[CALIBRATION].uuid);
-					console.log('characteristics COMMANDE   : ' + characteristics[COMMANDE].uuid);
+					console.log('Services decouvert');
 				    characteristicPilote = characteristics
-				})
+					})
 			})	
 		});
 
