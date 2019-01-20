@@ -3,15 +3,32 @@
 curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
 sudo apt install -y nodejs
 
+// pour ouvrir nodejs sans sudo
+
 sudo apt-get install libcap2-bin
 sudo setcap cap_net_raw+eip $(eval readlink -f `which node`)
 
+//installation du programme pilote
+
 git clone https://github.com/vincenthure/pilote1.git
 cd pilote1
-
 npm install
 
+//test du programme
 node app.js
+
+//installation et gestion du service
+cd /etc/systemd/system
+sudo nano pilote.service
+sudo systemctl start pilote.service
+sudo systemctl enable pilote.service   // demmarrage automatique au boot
+sudo systemctl restart pilote.service
+sudo systemctl stop pilote.service
+sudo systemctl status pilote.service
+
+boot en mode console en tant que pi (raspi-config)
+mofifier le fichier .profile (dans /home/pi) pour qu'il lance startx
+installer le fichier .xinitrc (dans /home/pi) pour lancer chrome en mode kiosque
 
 //////////////////  installation pilote ///////////////
 

@@ -1,0 +1,13 @@
+[Unit]
+Description=Pilote
+After=graphical.target
+
+[Service]
+ExecStart=/usr/bin/node /home/pi/pilote1/app.js
+WorkingDirectory=/home/pi/pilote1
+StandardOutput=stdout
+StandardError=inherit
+Restart=always
+
+[Install]
+WantedBy=default.target

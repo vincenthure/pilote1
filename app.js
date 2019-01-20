@@ -33,6 +33,9 @@ app.get('/remote', function (req, res)
 		
 		case 'reboot'   :	exeCute("sudo reboot")
 							break
+							
+		case 'terminal' :	exeCute("/usr/bin/x-terminal-emulator")
+							break
 		}
 	res.send(true)
 	})
@@ -159,20 +162,27 @@ var connection = false
 
 //************** Start Scanning
 
-noble.on('stateChange',
+function initBluetooth()
+	{
+	noble.on('stateChange',
 	function(state)
 		{
-		console.log("state Change");
+		console.log("state Change")
 		if( state === 'poweredOn')
 			{
-			console.log("start scanning");
-			noble.startScanning([SERVICE_UUID],false);
+			console.log("start scanning")
+			noble.startScanning([SERVICE_UUID],false)
 			}
 		else
 			{
-			noble.stopScanning();
+			console.log("stop scanning")
+			noble.stopScanning()
 			}
 		});
+
+	}
+
+setInterval( initBluetooth, 5000 )
 
 //************* On Discover ****************************************
 
