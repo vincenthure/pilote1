@@ -20,27 +20,27 @@ app.get('/reload', function (req, res)
 	exeCute("sudo systemctl restart pilote.service")
 	})
 
-app.get('/remote', function (req, res) 		
+app.get('/remote', function (req, res)
 	{
 	console.log("remote "+req.query.value)
 	switch(req.query.value)
 		{
 		case 'service'  :	exeCute("sudo systemctl restart pilote.service")
 							break
-			
+
 		case 'shutdown' :	exeCute("sudo shutdown now")
 							break
-		
+
 		case 'reboot'   :	exeCute("sudo reboot")
 							break
-							
-		case 'terminal' :	exeCute("/usr/bin/x-terminal-emulator")
+
+		case 'desktop' :	exeCute("rm /home/pi/.xinitrc ; sudo reboot")
 							break
 		}
 	res.send(true)
 	})
-	
-app.get('/capGet', function (req, res) 		
+
+app.get('/capGet', function (req, res) 
 	{
 	console.log("capGet")
 	get_data_from_pilote( CAP, res )
