@@ -1,3 +1,13 @@
+var xmin=0,
+    ymin=0,
+    zmin=0,
+    xmax=0,
+    ymax=0,
+    zmax=0,
+    xo,
+    yo,
+    zo;
+        
 window.onload = function(e)
     {
     document.getElementById( "mxm" ).innerHTML  = 4
@@ -5,6 +15,7 @@ window.onload = function(e)
     document.getElementById( "mzm" ).innerHTML  = 6
     
     get_calibration_magneto()
+
                             
     setInterval(function()
         {
@@ -32,8 +43,12 @@ function get_calibration_magneto()
     
 function save_calibration_magneto()
     {
-    $.get(  URL+"commande", 
-            { value:"magnetoSave" }),
+    $.get(  URL+"magnetoSave", 
+            { 
+            xo:xo,
+            yo:yo,
+            zo,zo
+            }),
             function() { get_calibration_magneto() }
     }
     
@@ -47,7 +62,19 @@ function get_capteur_magneto()
 
                 document.getElementById( "mx"  ).innerHTML  = data[3]
                 document.getElementById( "my"  ).innerHTML  = data[4]
-                document.getElementById( "mz"  ).innerHTML  = data[5]              
+                document.getElementById( "mz"  ).innerHTML  = data[5]
+                xmin = Math.min(xmin, data[3])
+                xmax = Math.max(xmax, data[3])             
+                ymin = Math.min(ymin, data[4])
+                ymax = Math.max(ymax, data[4])             
+                zmin = Math.min(zmin, data[5])
+                zmax = Math.max(zmax, data[5])
+                xo = (xmin+xmax)/2 
+                yo = (ymin+ymax)/2
+                zo = (zmin+zmax)/2
+                document.getElementById( "mxm"  ).innerHTML  = xo
+                document.getElementById( "mym"  ).innerHTML  = yo
+                document.getElementById( "mzm"  ).innerHTML  = zo            
                 }
             )
    }

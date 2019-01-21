@@ -72,13 +72,6 @@ app.get('/commande', function (req, res)
 	{
 	console.log("commande : "+req.query.value)
 	send_commande_to_pilote( req.query.value, res )
-	})	
-
-app.get('/magnetoSave', function (req, res) 
-	{
-	console.log("xo : "+req.query.xo)
-	console.log("yo : "+req.query.yo)
-	console.log("zo : "+req.query.zo)
 	})		
 
 app.get('/',               function (req, res) { res.render("pages/cap",    {titre:"Auto Pilote"})    })
@@ -209,14 +202,13 @@ noble.on('discover',function(peripheral)
 		peripheral.connect( function() 
 			{
 			console.log('Connection');
-			
+			connection = true 
 			peripheral.discoverSomeServicesAndCharacteristics(
 				[SERVICE_UUID], 	
 				[CAP_UUID,DATA_UUID,PID_UUID,CAPTEUR_UUID,CALIBRATION_UUID,COMMANDE_UUID], 
 				function(error, services, characteristics) 
 					{
-					console.log('Services decouvert')
-					connection = true 
+					console.log('Services decouvert');
 				    characteristicPilote = characteristics
 					})
 			})	
