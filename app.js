@@ -76,9 +76,30 @@ app.get('/commande', function (req, res)
 
 app.get('/magnetoSave', function (req, res) 
 	{
-	console.log("xo : "+req.query.xo)
-	console.log("yo : "+req.query.yo)
-	console.log("zo : "+req.query.zo)
+	if(connection)
+		{
+		const buf = Buffer.allocUnsafe(12)
+        buf.writeFloatBE(req.query.xo, 0)
+        buf.writeFloatBE(req.query.yo, 4)
+        buf.writeFloatBE(req.query.zo, 8)
+					
+		characteristicPilote[CALIBRATION].write(buf, false, function(error)
+			{
+			if(!error)
+				{
+				res.send(true)
+				}
+			else
+				{
+				console.log(error)
+				res.send(false)
+				}
+			})
+		}
+	else
+		{
+		res.send(false)
+		}	
 	})		
 
 app.get('/',               function (req, res) { res.render("pages/cap",    {titre:"Auto Pilote"})    })

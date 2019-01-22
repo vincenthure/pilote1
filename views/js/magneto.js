@@ -35,7 +35,7 @@ function get_calibration_magneto()
                 data= JSON.parse(json_data)
 
                 document.getElementById( "mxo"  ).innerHTML  = data[3]
-                document.getElementById( "myo"  ).innerHTML  = data[5]
+                document.getElementById( "myo"  ).innerHTML  = data[4]
                 document.getElementById( "mzo"  ).innerHTML  = data[5]        
                 }
             )
