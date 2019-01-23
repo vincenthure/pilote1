@@ -14,7 +14,7 @@ window.onload = function(e)
     document.getElementById( "mym" ).innerHTML  = 5
     document.getElementById( "mzm" ).innerHTML  = 6
     
-    get_calibration_magneto()
+    get_calibration()
 
                             
     setInterval(function()
@@ -24,9 +24,10 @@ window.onload = function(e)
         ,200)
     }
     
-document.getElementById("save").addEventListener("click", function()  { save_calibration_magneto() })
+document.getElementById("compas").addEventListener("click", function()  { save_calibration_magneto() })
+document.getElementById("gyro").addEventListener("click", function()     { save_calibration_gyro()    })
 
-function get_calibration_magneto()
+function get_calibration()
     {
      $.get   (
             URL+"calibrationGet",
@@ -34,6 +35,9 @@ function get_calibration_magneto()
                 {
                 data= JSON.parse(json_data)
 
+                document.getElementById( "gxo"   ).innerHTML  = data[0]
+                document.getElementById( "gyo"   ).innerHTML  = data[1]
+                document.getElementById( "gzo"   ).innerHTML  = data[2]        
                 document.getElementById( "mxo"  ).innerHTML  = data[3]
                 document.getElementById( "myo"  ).innerHTML  = data[4]
                 document.getElementById( "mzo"  ).innerHTML  = data[5]        
@@ -48,8 +52,12 @@ function save_calibration_magneto()
             xo:xo,
             yo:yo,
             zo,zo
-            }),
-            function() { get_calibration_magneto() }
+            },
+            function()  { 
+                        get_calibration()
+                        console.log("save magneto") 
+                        }
+        )
     }
     
 function get_capteur_magneto()
@@ -60,9 +68,6 @@ function get_capteur_magneto()
                 {
                 data= JSON.parse(json_data)
 
-                document.getElementById( "mx"  ).innerHTML  = data[3]
-                document.getElementById( "my"  ).innerHTML  = data[4]
-                document.getElementById( "mz"  ).innerHTML  = data[5]
                 xmin = Math.min(xmin, data[3])
                 xmax = Math.max(xmax, data[3])             
                 ymin = Math.min(ymin, data[4])
@@ -78,3 +83,16 @@ function get_capteur_magneto()
                 }
             )
    }
+
+
+function save_calibration_gyro()
+    {
+    $.get(  URL+"commande", 
+            { value:"gyroSave" },
+            function(jsondata)  { 
+                                get_calibration() 
+                                console.log("save gyro") 
+                                }
+                                )
+    }
+  
