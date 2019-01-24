@@ -1,19 +1,36 @@
 <% include ../partials/header %>
  
-<p><b>Accéléromètre</b></p>
-<h6>  X : <span id="ax"></span> g  </h6>
-<h6>  Y : <span id="ay"></span> g  </h6>
-<h6>  Z : <span id="az"></span> g  </h6>
- 			
-<p><b>Compas</b></p>
-<h6>  X : <span id="mx"></span> </h6>
-<h6>  Y : <span id="my"></span> </h6>
-<h6>  Z : <span id="mz"></span> </h6>
 
-<p><b>Gyroscope</b></p>
-<h6>  X : <span id="gx"></span> </h6>
-<h6>  Y : <span id="gy"></span> </h6>
-<h6>  Z : <span id="gz"></span> </h6>
+<table>
+    <thead>
+      <tr>
+          <th></th>
+          <th>X</th>
+          <th>Y</th>
+          <th>Z</th>
+      </tr>
+    </thead>
 
+    <tbody>
+      <tr>
+        <td>Accéléromètre</td>
+        <td><span id="ax"></span></td>
+        <td><span id="ay"></span></td>
+        <td><span id="az"></span></td>
+      </tr>
+      <tr>
+        <td>Compas</td>
+        <td><span id="mx"></span></td>
+        <td><span id="my"></span></td>
+        <td><span id="mz"></span></td>
+      </tr>
+      <tr>
+        <td>Gyroscope</td>
+        <td><span id="gx"></span></td>
+        <td><span id="gy"></span></td>
+        <td><span id="gz"></span></td>
+      </tr>
+    </tbody>
+  </table>
 <% include ../partials/footer %>	
 <script type="text/javascript" src="js/capteur.js"></script>

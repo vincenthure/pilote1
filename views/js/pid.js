@@ -36,18 +36,18 @@ function set_pid( value )
 
 function slider(input,output)
     {
-    const style = "' height='20' rx='10' fill='#42a5f5' />"
+    const style = "' height='10' rx='5' fill='#42a5f5' />"
     
     input *= 10;
-    x1 = (input<0) ? (160+input) : 160
+    x1 = (input<0) ? (220+input) : 220
     input = Math.abs(input)
  
-    x2 = (output<0) ? (160+output) : 160
+    x2 = (output<0) ? (220+output) : 220
     output = Math.abs(output)
 
-    var svg = "<svg width='330' height='60'>"
+    var svg = "<svg width='440' height='35'>"
         svg += "<rect x='"+x1+"' y='05' width='"+input+style
-        svg += "<rect x='"+x2+"' y='35' width='"+output+style
+        svg += "<rect x='"+x2+"' y='25' width='"+output+style
         svg += "</svg>"
     document.getElementById("rectangle1").innerHTML  = svg
     }

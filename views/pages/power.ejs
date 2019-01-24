@@ -1,23 +1,24 @@
 <% include ../partials/header %>
 
-<br>
-<button  class="waves-effect waves-light btn" id="eteindre">Eteindre Pilote</button>
-<br>
-<br>
-<button  class="waves-effect waves-light btn" id="redemarrer">Redémarrer Pilote</button>
-<br>
-<br>
-<button  class="waves-effect waves-light btn" id="reload">Reinitialise service</button>
-<br>
-<br>
-<button  class="waves-effect waves-light btn" id="remote_off">Eteindre télécommmande</button>
-<br>
-<br>
-<button  class="waves-effect waves-light btn" id="remote_reboot">Redémarrer télécommmande</button>
-<br>
-<br>
-<button  class="waves-effect waves-light btn" id="desktop">Mode Bureau</button>
+<table>
+        <tbody>
+          <tr>
+            <td>Pilote</td>
+            <td><button  class="waves-effect waves-light btn" id="eteindre">Eteindre</button></td>
+            <td><button  class="waves-effect waves-light btn" id="redemarrer">Redémarrer</button></td>
+          </tr>
+          <tr>
+            <td>Télécommade</td>
+            <td><button  class="waves-effect waves-light btn" id="remote_off">Eteindre</button></td>
+            <td><button  class="waves-effect waves-light btn" id="remote_reboot">Redémarrer</button></td>
+          </tr>
+          <tr>
+            <td>Synchro</td>
+            <td><button  class="waves-effect waves-light btn" id="reload">Reinitialise</button></td>
+            <td></td>
 
- 			
+          </tr>
+        </tbody>
+</table>
 <% include ../partials/footer %>	
 <script type="text/javascript" src="js/power.js"></script>

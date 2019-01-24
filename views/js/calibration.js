@@ -9,13 +9,8 @@ var xmin=0,
     zo;
         
 window.onload = function(e)
-    {
-    document.getElementById( "mxm" ).innerHTML  = 4
-    document.getElementById( "mym" ).innerHTML  = 5
-    document.getElementById( "mzm" ).innerHTML  = 6
-    
+    {    
     get_calibration()
-
                             
     setInterval(function()
         {
@@ -35,31 +30,16 @@ function get_calibration()
                 {
                 data= JSON.parse(json_data)
 
-                document.getElementById( "gxo"   ).innerHTML  = data[0]
-                document.getElementById( "gyo"   ).innerHTML  = data[1]
-                document.getElementById( "gzo"   ).innerHTML  = data[2]        
+                document.getElementById( "gxo"  ).innerHTML  = data[0]
+                document.getElementById( "gyo"  ).innerHTML  = data[1]
+                document.getElementById( "gzo"  ).innerHTML  = data[2]        
                 document.getElementById( "mxo"  ).innerHTML  = data[3]
                 document.getElementById( "myo"  ).innerHTML  = data[4]
                 document.getElementById( "mzo"  ).innerHTML  = data[5]        
                 }
             )
     }
-    
-function save_calibration_magneto()
-    {
-    $.get(  URL+"magnetoSave", 
-            { 
-            xo:xo,
-            yo:yo,
-            zo,zo
-            },
-            function()  { 
-                        get_calibration()
-                        console.log("save magneto") 
-                        }
-        )
-    }
-    
+
 function get_capteur_magneto()
     {
     $.get   (
@@ -84,15 +64,28 @@ function get_capteur_magneto()
             )
    }
 
-
 function save_calibration_gyro()
     {
     $.get(  URL+"commande", 
             { value:"gyroSave" },
             function(jsondata)  { 
                                 get_calibration() 
-                                console.log("save gyro") 
+                                console.log("saved gyro") 
                                 }
                                 )
     }
   
+function save_calibration_magneto()
+    {
+    $.get(  URL+"magnetoSave", 
+            { 
+            xo:xo,
+            yo:yo,
+            zo,zo
+            },
+            function()  { 
+                        get_calibration()
+                        console.log("saved magneto") 
+                        }
+        )
+    }

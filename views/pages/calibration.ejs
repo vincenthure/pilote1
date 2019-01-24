@@ -1,17 +1,41 @@
 <% include ../partials/header %>
 
-<h6>  X offset :      <span id="mxo"> </span>  new : <span id="mxm"> </span></h6>
-<h6>  Y offset :      <span id="myo"> </span>  new : <span id="mym"> </span></h6>
-<h6>  Z offset :      <span id="mzo"> </span>  new : <span id="mzm"> </span></h6>
+
+<table>
+        <thead>
+          <tr>
+              <th></th>
+              <th>X</th>
+              <th>Y</th>
+              <th>Z</th>
+          </tr>
+        </thead>
+    
+        <tbody>
+          <tr>
+            <td>Compas ancien</td>
+            <td><span id="mxo"></span></td>
+            <td><span id="myo"></span></td>
+            <td><span id="mzo"></span></td>
+          </tr>
+          <tr>
+            <td>Compas nouveau</td>
+            <td><span id="mxm"></span></td>
+            <td><span id="mym"></span></td>
+            <td><span id="mzm"></span></td>
+          </tr>
+          <tr>
+            <td>Gyroscope</td>
+            <td><span id="gxo"></span></td>
+            <td><span id="gyo"></span></td>
+            <td><span id="gzo"></span></td>
+          </tr>
+        </tbody>
+      </table>
 
 <button  id="compas" class="waves-effect waves-light btn red lighten-2">Compas</button>
-<hr>  
-
-<h6>  X offset :  <span id="gxo">  </span>    </h6>
-<h6>  Y offset :  <span id="gyo">  </span>    </h6>
-<h6>  Z offset :  <span id="gzo">  </span>    </h6>
-
 <button  id="gyro" class="waves-effect waves-light btn red lighten-2">Gyroscope</button>
- 			
+
+
 <% include ../partials/footer %>	
 <script type="text/javascript" src="js/calibration.js"></script>
