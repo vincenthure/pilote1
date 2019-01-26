@@ -26,9 +26,16 @@ sudo systemctl restart pilote.service
 sudo systemctl stop pilote.service
 sudo systemctl status pilote.service
 
+pour consulter le fichier log
+journalctl -u pilote.service
+
 boot en mode console en tant que pi (raspi-config)
 mofifier le fichier .profile (dans /home/pi) pour qu'il lance startx
 installer le fichier .xinitrc (dans /home/pi) pour lancer chrome en mode kiosque
+
+git clone https://github.com/waveshare/LCD-show.git
+cd LCD-show
+sudo ./LCD35-show
 
 //////////////////  installation pilote ///////////////
 
@@ -64,6 +71,9 @@ WantedBy=default.target
 sudo chmod 777 pilote.service
 sudo systemctl start pilote.service
 sudo systemctl enable pilote.service
+
+pour consulter le fichier log
+journalctl -u pilote.service
 
 ///////////////// mise à jour //////////////////
 

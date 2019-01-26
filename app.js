@@ -50,7 +50,7 @@ app.get('/dataGet', function (req, res)
 	{
 	get_data_from_pilote( DATA, res )
 	})
-				
+
 app.get('/pidGet', function (req, res) 		
 	{
 	console.log("pidGet")
@@ -61,13 +61,13 @@ app.get('/capteurGet', function (req, res)
 	{
 	get_data_from_pilote( CAPTEUR, res )
 	})
-				
+		
 app.get('/calibrationGet', function (req, res)
 	{
 	console.log("calibrationGet")
 	get_data_from_pilote( CALIBRATION, res )
 	})
-				
+			
 app.get('/commande', function (req, res) 
 	{
 	console.log("commande : "+req.query.value)
@@ -82,7 +82,7 @@ app.get('/magnetoSave', function (req, res)
         buf.writeFloatBE(req.query.xo, 0)
         buf.writeFloatBE(req.query.yo, 4)
         buf.writeFloatBE(req.query.zo, 8)
-					
+	
 		characteristicPilote[CALIBRATION].write(buf, false, function(error)
 			{
 			if(!error)
