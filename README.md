@@ -1,24 +1,24 @@
 # pilote1
 
 Installer raspbian sur carte Sd
+configurer le RPI en local avec l'outils graphique
 
-configurer le RPI en local
 
 hostname :  remote
 password :  admin
 SSH : on
 reboot : console login as pi
+Location, clavier...
+Wifi
 
-ssh pi@raspberry.local
+Se connecter par un autre ordi en mode console
+ssh pi@remote.local
 
 login pi
 
 password admin
 
-
-
-
-
+exectuter les commandes contenu dans le fichier configuration/intall.sh
 
 
 
