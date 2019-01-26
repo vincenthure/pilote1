@@ -4,6 +4,9 @@ Installer raspbian lite sur carte Sd
 
 créer un fichier nommé ssh dans la partition boot
 
+copier dans la partition boot le fichier "wpa_supplicant.conf"
+ssh pi@raspberry.local
+
 login pi
 
 password rqspberry
