@@ -20,7 +20,7 @@ window.onload = function(e)
     }
     
 document.getElementById("compas").addEventListener("click", function()  { save_calibration_magneto() })
-document.getElementById("gyro").addEventListener("click", function()     { save_calibration_gyro()    })
+document.getElementById("gyro").addEventListener("click", function()    { save_calibration_gyro()    })
 
 function get_calibration()
     {
@@ -30,9 +30,9 @@ function get_calibration()
                 {
                 data= JSON.parse(json_data)
 
-                document.getElementById( "gxo"  ).innerHTML  = data[0]
-                document.getElementById( "gyo"  ).innerHTML  = data[1]
-                document.getElementById( "gzo"  ).innerHTML  = data[2]        
+                document.getElementById( "gxo"  ).innerHTML  = data[0].toFixed(3)
+                document.getElementById( "gyo"  ).innerHTML  = data[1].toFixed(3)
+                document.getElementById( "gzo"  ).innerHTML  = data[2].toFixed(3)       
                 document.getElementById( "mxo"  ).innerHTML  = data[3]
                 document.getElementById( "myo"  ).innerHTML  = data[4]
                 document.getElementById( "mzo"  ).innerHTML  = data[5]        
