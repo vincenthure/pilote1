@@ -1,7 +1,5 @@
 window.onload = function(e) { get_pid() }
 
-document.getElementById("save").addEventListener("click", function()  { commande("pidSave") })
-
 document.getElementById("kp-").addEventListener("click", function()  { set_pid("kp-") })
 document.getElementById("kp+").addEventListener("click", function()  { set_pid("kp+") })
 document.getElementById("ki-").addEventListener("click", function()  { set_pid("ki-") })
