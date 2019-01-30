@@ -40,6 +40,7 @@ function slider(input,output)
     x1 = (input<0) ? (220+input) : 220
     input = Math.abs(input)
  
+    output *= 120
     x2 = (output<0) ? (220+output) : 220
     output = Math.abs(output)
 
