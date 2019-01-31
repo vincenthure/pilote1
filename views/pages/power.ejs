@@ -1,21 +1,26 @@
 <% include ../partials/header %>
 
 <table>
+        <thead>
+          <td></td>
+          <td>off</td>
+          <td>reboot</td>
+          <td>reload</td>
+
+          
+        </thead>
         <tbody>
           <tr>
             <td>Pilote</td>
-            <td><button  class="waves-effect waves-light btn" id="eteindre">Eteindre</button></td>
-            <td><button  class="waves-effect waves-light btn" id="redemarrer">Redémarrer</button></td>
+            <td><button  class="waves-effect waves-light btn" id="pilote_off">go</button></td>
+            <td><button  class="waves-effect waves-light btn" id="pilote_reboot">go</button></td>
+            <td><button  class="waves-effect waves-light btn" id="pilote_reload">go</button></td>
           </tr>
           <tr>
             <td>Télécommade</td>
-            <td><button  class="waves-effect waves-light btn" id="remote_off">Eteindre</button></td>
-            <td><button  class="waves-effect waves-light btn" id="remote_reboot">Redémarrer</button></td>
-          </tr>
-          <tr>
-            <td>Synchro</td>
-            <td><button  class="waves-effect waves-light btn" id="reload">Reinitialise</button></td>
-            <td></td>
+            <td><button  class="waves-effect waves-light btn" id="remote_off">go</button></td>
+            <td><button  class="waves-effect waves-light btn" id="remote_reboot">go</button></td>
+            <td><button  class="waves-effect waves-light btn" id="remote_reload">go</button></td>
           </tr>
         </tbody>
 </table>
