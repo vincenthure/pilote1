@@ -35,12 +35,12 @@ function get_cap()
 							{
                             if(data)
 								{
-								document.getElementById("stanby").innerHTML='pause'
+								document.getElementById("cap").innerHTML='pilote en pause'
+								document.getElementById("stanby").innerHTML='actif'								
 								}
                             else    
 								{
-								document.getElementById("cap").innerHTML='pilote en pause'
-								document.getElementById("stanby").innerHTML='actif'
+								document.getElementById("stanby").innerHTML='pause'
 								}
                             })
    }
