@@ -1,4 +1,4 @@
-//****************** express **********************************************
+//****************** express *******************************************
 
 const express = require('express')
 const exeCute = require('exe')
@@ -32,9 +32,6 @@ app.get('/remote', function (req, res)
 							break
 
 		case 'reboot'   :	exeCute("sudo reboot")
-							break
-
-		case 'desktop' :	exeCute("rm /home/pi/.xinitrc ; sudo reboot")
 							break
 		}
 	res.send(true)
@@ -191,7 +188,7 @@ function send_commande_to_pilote( cmd, res )
 		}
 	}
 	
-//***************** Noble ***********************************************
+//***************** Noble **********************************************
 
 const SERVICE_UUID     = 'ff10'
 const CAP_UUID         = 'ff17'
@@ -213,11 +210,9 @@ var noble = require('noble');
 
 var connection = false
 
-//************** Start Scanning
+//************** Start Scanning ****************************************
 
-function initBluetooth()
-	{
-	noble.on('stateChange',
+noble.on('stateChange',
 	function(state)
 		{
 		console.log("state Change")
@@ -233,11 +228,7 @@ function initBluetooth()
 			}
 		});
 
-	}
-
-setInterval( initBluetooth, 5000 )
-
-//************* On Discover ****************************************
+//************* On Discover ********************************************
 
 noble.on('discover',function(peripheral)
 		{
@@ -249,7 +240,7 @@ noble.on('discover',function(peripheral)
 			console.log('Deconnection');
 			connection = false
 			exeCute("sudo systemctl restart pilote.service")
-			//noble.startScanning([SERVICE_UUID],false);
+			noble.startScanning([SERVICE_UUID],false);
 			});
 
 		peripheral.connect( function() 

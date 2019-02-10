@@ -3,6 +3,7 @@ Description=Pilote
 After=graphical.target
 
 [Service]
+ExecStartPre=/bin/sleep 3
 ExecStart=/usr/bin/node /home/pi/pilote1/app.js
 WorkingDirectory=/home/pi/pilote1
 StandardOutput=stdout
