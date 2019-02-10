@@ -61,7 +61,7 @@ app.get('/capteurGet', function (req, res)
 	{
 	get_data_from_pilote( CAPTEUR, res )
 	})
-		
+
 app.get('/calibrationGet', function (req, res)
 	{
 	console.log("calibrationGet")
