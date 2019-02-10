@@ -1,24 +1,57 @@
 <% include ../partials/header %>
 
-<h6>
-    <button  class="waves-effect waves-light btn" id="kp-">-</button>
-    Kp : <span id="kp"></span>
-    <button class="waves-effect waves-light btn" id="kp+">+</button>
-</h6>
+<br>
+<div class="row">
+	
+	<div class="col s2">
+		<button  class="waves-effect waves-light btn" id="kp-">-</button>
+	</div>
+	
+	<div class="col s2">
+		Kp : <span id="kp"></span>
+	</div>
+	
+	<div class="col s2">
+		<button class="waves-effect waves-light btn" id="kp+">+</button>
+	</div>
 
-<h6>
-    <button  class="waves-effect waves-light btn" id="ki-">-</button>
-    Ki : <span id="ki"></span>
-    <button  class="waves-effect waves-light btn" id="ki+">+</button>
-</h6>
-			
-<h6>
-    <button  class="waves-effect waves-light btn" id="kd-">-</button>
-    Kd : <span id="kd"></span>
-    <button  class="waves-effect waves-light btn" id="kd+">+</button>
-</h6>
-      
-<p id="rectangle1"></p>
-      			
+</div>
+
+<div class="row">
+
+	<div class="col s2">
+		<button  class="waves-effect waves-light btn" id="ki-">-</button>
+	</div>
+	
+	<div class="col s2">
+		Ki : <span id="ki"></span>
+	</div>
+	
+	<div class="col s2">
+		<button class="waves-effect waves-light btn" id="ki+">+</button>
+	</div>
+	
+</div>
+
+<div class="row">
+	
+	<div class="col s2">
+		<button  class="waves-effect waves-light btn" id="kd-">-</button>
+	</div>
+	
+	<div class="col s2">
+		Kd : <span id="kd"></span>
+	</div>
+	
+	<div class="col s2">
+		<button class="waves-effect waves-light btn" id="kd+">+</button>
+	</div>
+	
+</div>
+   
+<span id="rectangle1"></span>
+
+<span id="out"></span>
+
 <% include ../partials/footer %>	
 <script type="text/javascript" src="js/pid.js"></script>

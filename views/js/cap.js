@@ -1,10 +1,11 @@
 window.onload = function(e){ get_cap() }
 
-document.getElementById("-10").addEventListener("click", function()  { change_cap( 'cap--'  ) })
-document.getElementById("-1" ).addEventListener("click", function()  { change_cap( 'cap-'   ) })
-document.getElementById("set").addEventListener("click", function()  { change_cap( 'capset' ) })
-document.getElementById("+1" ).addEventListener("click", function()  { change_cap( 'cap+'   ) })
-document.getElementById("+10").addEventListener("click", function()  { change_cap( 'cap++'  ) })
+document.getElementById("-10").addEventListener("click", function()    { change_cap( 'cap--'  ) })
+document.getElementById("-1" ).addEventListener("click", function()    { change_cap( 'cap-'   ) })
+document.getElementById("set").addEventListener("click", function()    { change_cap( 'capset' ) })
+document.getElementById("+1" ).addEventListener("click", function()    { change_cap( 'cap+'   ) })
+document.getElementById("+10").addEventListener("click", function()    { change_cap( 'cap++'  ) })
+document.getElementById("stanby").addEventListener("click", function() { change_stanby()   })
     
 function change_cap(x)
     {
@@ -26,7 +27,28 @@ function get_cap()
                                 }
                             else
                                 {
-                                document.getElementById("cap").innerHTML = str+'°'
+                                document.getElementById("cap").innerHTML = "cap : "+str+'°'
                                 }
                             })
+     $.get(  URL+"stanby", 
+            function(data) 
+							{
+                            if(data)
+								{
+								document.getElementById("stanby").innerHTML='pause'
+								}
+                            else    
+								{
+								document.getElementById("cap").innerHTML='pilote en pause'
+								document.getElementById("stanby").innerHTML='actif'
+								}
+                            })
+   }
+
+function change_stanby()
+    {
+    $.get(  URL+"commande", 
+            { value:"stanby" },
+            function(data) { get_cap() });
     }
+    

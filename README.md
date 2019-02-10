@@ -21,6 +21,7 @@ password admin
 exectuter les commandes contenu dans le fichier configuration/intall.sh
 
 
+connexion wifi en ip fixe 192.168.0.101
 
 gestion du service
 

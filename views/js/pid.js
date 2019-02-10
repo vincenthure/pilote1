@@ -36,17 +36,17 @@ function slider(input,output)
     {
     const style = "' height='10' rx='5' fill='#42a5f5' />"
     
-    input *= 10;
+    input *= 20;
     x1 = (input<0) ? (220+input) : 220
     input = Math.abs(input)
  
-    output *= 120
+    output *= 200
     x2 = (output<0) ? (220+output) : 220
     output = Math.abs(output)
 
-    var svg = "<svg width='440' height='35'>"
-        svg += "<rect x='"+x1+"' y='05' width='"+input+style
-        svg += "<rect x='"+x2+"' y='25' width='"+output+style
+    var svg = "<svg width='440' height='30'>"
+        svg += "<rect x='"+x1+"' y='0' width='"+input+style
+        svg += "<rect x='"+x2+"' y='20' width='"+output+style
         svg += "</svg>"
     document.getElementById("rectangle1").innerHTML  = svg
     }
@@ -56,7 +56,10 @@ function get_data()
     $.get(  URL+"dataGet", 
             function(data) {
                             x = JSON.parse(data);
-                            slider( x[0],x[1]*1.6 ) 
+                            slider( x[0],x[1] )
+                            //document.getElementById("error").innerHTML = x[0]
+                            document.getElementById("out").innerHTML = Math.round(x[1]*100)+'%'
+                            //document.getElementById("cap").innerHTML = x[2]
                             });
     }
 

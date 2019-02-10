@@ -72,7 +72,31 @@ app.get('/commande', function (req, res)
 	{
 	console.log("commande : "+req.query.value)
 	send_commande_to_pilote( req.query.value, res )
-	})	
+	})
+	
+app.get('/stanby', function (req, res) 
+	{
+	if(connection)
+		{
+		characteristicPilote[STANBY].read( function(error,data) 
+			{ 
+			if(!error)
+				{
+				const buf = Buffer.from(data)
+				let state = buf.readUInt8(0)?true:false
+				res.send(state)
+				}
+			else
+				{
+				console.log(error)
+				res.send(false)
+				}				
+			});
+		}
+	else
+		{
+		res.send(false)
+		}			})
 
 app.get('/magnetoSave', function (req, res) 
 	{
@@ -176,12 +200,14 @@ const PID_UUID         = 'ff19'
 const CAPTEUR_UUID     = 'ff20'
 const CALIBRATION_UUID = 'ff21'
 const COMMANDE_UUID    = 'ff22'
+const STANBY_UUID      = 'ff23'
 const CAP              = 0
 const DATA             = 1
 const PID              = 2
 const CAPTEUR          = 3
 const CALIBRATION      = 4
 const COMMANDE         = 5
+const STANBY           = 6
 
 var noble = require('noble');
 
@@ -232,7 +258,7 @@ noble.on('discover',function(peripheral)
 			
 			peripheral.discoverSomeServicesAndCharacteristics(
 				[SERVICE_UUID], 	
-				[CAP_UUID,DATA_UUID,PID_UUID,CAPTEUR_UUID,CALIBRATION_UUID,COMMANDE_UUID], 
+				[CAP_UUID,DATA_UUID,PID_UUID,CAPTEUR_UUID,CALIBRATION_UUID,COMMANDE_UUID,STANBY_UUID], 
 				function(error, services, characteristics) 
 					{
 					console.log('Services decouvert')
