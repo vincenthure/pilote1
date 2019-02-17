@@ -1,0 +1,4 @@
+hostname remote
+login pi
+password admin
+ip wifi 192.168.0.102

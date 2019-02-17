@@ -124,6 +124,7 @@ app.get('/magnetoSave', function (req, res)
 	})		
 
 app.get('/',               function (req, res) { res.render("pages/cap",        {titre:"Auto Pilote"})    })
+app.get('/heading',        function (req, res) { res.render("pages/heading",    {titre:"Cap"})            })
 app.get('/capteur',        function (req, res) { res.render("pages/capteur",    {titre:"Capteurs"})       })
 app.get('/asservissement', function (req, res) { res.render("pages/pid",        {titre:"Asservissement"}) })
 app.get('/calibration',    function (req, res) { res.render("pages/calibration",{titre:"Calibration"})    })

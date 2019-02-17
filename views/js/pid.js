@@ -40,7 +40,7 @@ function slider(input,output)
     x1 = (input<0) ? (220+input) : 220
     input = Math.abs(input)
  
-    output *= 200
+    output *= 2
     x2 = (output<0) ? (220+output) : 220
     output = Math.abs(output)
 
@@ -58,7 +58,7 @@ function get_data()
                             x = JSON.parse(data);
                             slider( x[0],x[1] )
                             //document.getElementById("error").innerHTML = x[0]
-                            document.getElementById("out").innerHTML = Math.round(x[1]*100)+'%'
+                            document.getElementById("out").innerHTML = Math.round(x[1])+'%'
                             //document.getElementById("cap").innerHTML = x[2]
                             });
     }
